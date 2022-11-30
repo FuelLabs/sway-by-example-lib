@@ -1,14 +1,18 @@
 contract;
 
+dep errors;
+
+use errors::*;
+
 use std::{
     revert::require,
-    auth::msg_sender,
+    auth:: { AuthError, msg_sender },
 };
 
 abi OwnershipExample {
     #[storage(read, write)]
     fn revoke_ownership();
-    #[storage(write)]
+    #[storage(read, write)]
     fn set_owner(identity: Identity);
     #[storage(read)]
     fn owner() -> Option<Identity>;
@@ -21,19 +25,19 @@ storage {
 impl OwnershipExample for Contract {
     #[storage(read, write)]
     fn revoke_ownership() {
-        assert(storage.owner.unwrap() == msg_sender().unwrap());
+        let sender: Result<Identity, AuthError> = msg_sender(); 
+        require(sender.unwrap() == storage.owner.unwrap(), OwnerError::IsNotOwner);
         storage.owner = Option::None();
     }
 
-    #[storage(write)]
+    #[storage(read, write)]
     fn set_owner(identity: Identity) {
-        assert(storage.owner.unwrap() == msg_sender().unwrap());
+        let sender: Result<Identity, AuthError> = msg_sender(); 
+        require(sender.unwrap() == storage.owner.unwrap(), OwnerError::IsNotOwner);
         storage.owner = Option::Some(identity);
     }
     #[storage(read)]
     fn owner() -> Option<Identity> {
         storage.owner
     }
-
-    // some function locked by onlyOwner
 }
