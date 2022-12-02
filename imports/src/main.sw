@@ -18,7 +18,7 @@ use std::{
 
 // Importing library from a different project
 // Math libraries copied from https://github.com/sway-libs/concentrated-liquidity/
-use math_lib::full_math::*;
+use math_lib::full_math::mul_div_u64;
 
 storage {
     z: u64 = 0,
