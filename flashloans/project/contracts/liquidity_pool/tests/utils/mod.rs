@@ -125,7 +125,7 @@ pub mod test_helpers {
 
         let fl_instance = FlashLoaner::new(fl_contract_id.clone(), wallet.clone());
 
-
+        // let liquidity_pool_id = ContractId::from(*lp_contract_id.hash());
 
         (
             lp_instance,
