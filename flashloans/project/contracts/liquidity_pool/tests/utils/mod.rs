@@ -3,7 +3,6 @@ use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 // Load abi from json
 abigen!(LiquidityPool, "./out/debug/liquidity_pool-abi.json");
 abigen!(FlashLoaner, "./tests/artifacts/flashloaner/out/debug/flashloaner-abi.json");
-abigen!(MockToken, "../mock_token/out/debug/mock_token-abi.json");
 
 pub mod paths {
     pub const LIQUIDITY_POOL_BINARY_PATH: &str = "./out/debug/liquidity_pool.bin";
@@ -24,39 +23,6 @@ pub struct FlashLoanerContract {
 
 pub mod abi_calls {
     use super::*;
-
-    pub async fn fee(
-        contract: &LiquidityPool,
-    ) -> FuelCallResponse<u64> {
-        contract
-            .methods()
-            .get_fee()
-            .call()
-            .await
-            .unwrap()
-    }
-
-    pub async fn asset0(
-        contract: &LiquidityPool,
-    ) -> FuelCallResponse<ContractId> {
-        contract
-            .methods()
-            .get_token0()
-            .call()
-            .await
-            .unwrap()
-    }
-    
-    pub async fn asset1(
-        contract: &LiquidityPool,
-    ) -> FuelCallResponse<ContractId> {
-        contract
-            .methods()
-            .get_token1()
-            .call()
-            .await
-            .unwrap()
-    }
 
     pub async fn inititalize(
         contract: &LiquidityPool,
@@ -102,17 +68,6 @@ pub mod test_helpers {
         FLASH_LOANER_STORAGE_PATH
     };
 
-    // pub async fn initialize_lp_contract(wallet: &WalletUnlocked, lp_instance: &LiquidityPool) {
-    //     Contract::deploy(
-    //         LIQUIDITY_POOL_BINARY_PATH,
-    //         &wallet,
-    //         TxParameters::default(),
-    //         StorageConfiguration::default(),
-    //     )
-    //     .await
-    //     .unwrap();
-
-    // }
     pub async fn setup_and_initialize() -> (
         LiquidityPoolContract,
         FlashLoanerContract,
@@ -170,7 +125,7 @@ pub mod test_helpers {
 
         let fl_instance = FlashLoaner::new(fl_contract_id.clone(), wallet.clone());
 
-        // let liquidity_pool_id = ContractId::from(*lp_contract_id.hash());
+
 
         (
             lp_instance,

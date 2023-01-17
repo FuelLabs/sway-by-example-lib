@@ -1,10 +1,13 @@
-library flash_callback;
+library flash_loaner;
 
-abi flashloaner {
+abi FlashLoaner {
+    // flashCallback
     fn callback(
-        // TODO add fees
         fee0: u64,
         fee1: u64,
-        // some sort of data about returning funds
+        // some sort of data
+    );
+    fn init_flash(
+        curve: ContractId,
     );
 }
