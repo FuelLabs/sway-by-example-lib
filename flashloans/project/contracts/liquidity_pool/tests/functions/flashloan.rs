@@ -7,7 +7,7 @@ use crate::utils::{
 };
 
 abigen!(LiquidityPool, "./out/debug/liquidity_pool-abi.json");
-abigen!(Flashloaner, "./tests/artifacts/flashloaner/out/debug/flashloaner-abi.json");
+abigen!(Flashloaner, "../flashloaner/out/debug/flashloaner-abi.json");
 
 use fuels::prelude::*;
 
