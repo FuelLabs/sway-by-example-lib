@@ -2,13 +2,13 @@ use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
 abigen!(LiquidityPool, "./out/debug/liquidity_pool-abi.json");
-abigen!(FlashLoaner, "./tests/artifacts/flashloaner/out/debug/flashloaner-abi.json");
+abigen!(FlashLoaner, "../flashloaner/out/debug/flashloaner-abi.json");
 
 pub mod paths {
     pub const LIQUIDITY_POOL_BINARY_PATH: &str = "./out/debug/liquidity_pool.bin";
     pub const LIQUIDITY_POOL_STORAGE_PATH: &str = "./out/debug/liquidity_pool-storage_slots.json";
-    pub const FLASH_LOANER_BINARY_PATH: &str = "./tests/artifacts/flashloaner/out/debug/flashloaner.bin";
-    pub const FLASH_LOANER_STORAGE_PATH: &str = "./tests/artifacts/flashloaner/out/debug/flashloaner-storage_slots.json";
+    pub const FLASH_LOANER_BINARY_PATH: &str = "../flashloaner/out/debug/flashloaner.bin";
+    pub const FLASH_LOANER_STORAGE_PATH: &str = "../flashloaner/out/debug/flashloaner-storage_slots.json";
 }
 
 pub struct LiquidityPoolContract {
