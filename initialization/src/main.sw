@@ -5,40 +5,33 @@ dep errors;
 
 use lib::*;
 use errors::*;
+use std::{
+    identity::Identity
+};
 
 abi Initialization {
-    #[storage(read, write)]
-    fn initialize();
-
-    #[storage(read, write)]
-    fn upgrade_blockchain();
+    #[storage(write)]
+    fn transfer_ownership(new_owner: Identity);
 
     #[storage(read)]
-    fn blockchain() -> str[11];
+    fn owner() -> Identity;
 }
 
 storage {
-    state: State = State::NotInitialized,
-    
-    blockchain_type: str[11] = "monolithic!",
+    owner: Identity = Identity::Address(Address {
+        value: owner,
+    })
 }
 
 impl Initialization for Contract {
-    #[storage(read, write)]
-    fn initialize() {
-        require(storage.state == State::NotInitialized, InitializationError::CannotReinitialize);
-        
-        storage.state = State::Initialized;
-    }
-
-    #[storage(read, write)]
-    fn upgrade_blockchain() {
-        require(storage.state == State::Initialized, InitializationError::ContractNotInitialized);
-        storage.blockchain_type = "**modular**"
+    #[storage(write)]
+    fn transfer_ownership(new_owner: Identity) {
+        require(new_owner != Identity::Address(Address {value: 0x0000000000000000000000000000000000000000000000000000000000000000}), OwnerError::NewOwnerCannotBeZeroAddress);
+        storage.owner = new_owner
     }
 
     #[storage(read)]
-    fn blockchain() -> str[11] {
-        storage.blockchain_type
+    fn owner() -> Identity {
+        storage.owner
     }
 }
