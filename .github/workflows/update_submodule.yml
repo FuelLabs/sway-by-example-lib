@@ -2,7 +2,7 @@ name: Update Submodule
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # Run the workflow every 10 min
+    - cron: '*/1 * * * *' # Run the workflow every 1 min
 
 jobs:
   update_submodule:
