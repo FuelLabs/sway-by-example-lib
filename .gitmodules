@@ -1,0 +1,3 @@
+[submodule "sway-vs-solidity"]
+	path = sway-vs-solidity
+	url = https://github.com/FuelLabs/sway-vs-solidity
