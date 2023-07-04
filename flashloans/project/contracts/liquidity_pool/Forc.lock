@@ -1,0 +1,21 @@
+[[package]]
+name = 'core'
+source = 'path+from-root-A5A9AFB187495FC2'
+
+[[package]]
+name = 'liquidity_pool'
+source = 'member'
+dependencies = [
+    'math_lib',
+    'std',
+]
+
+[[package]]
+name = 'math_lib'
+source = 'path+from-root-FEF37F026EFAF705'
+dependencies = ['std']
+
+[[package]]
+name = 'std'
+source = 'git+https://github.com/fuellabs/sway?tag=v0.31.3#12ad8423811d566972dd75fbb954cdb95afde8d8'
+dependencies = ['core']
