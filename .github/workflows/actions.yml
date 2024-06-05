@@ -1,4 +1,4 @@
-name: Rust Cargo Test for Multiple Directories
+name: Rust Cargo Build for Multiple Directories
 
 on:
   pull_request:
@@ -6,12 +6,13 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
-      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
-      uses: actions-rs/toolchain@v1
+      uses: actions-rs/toolchain@v1.1.0
       with:
         toolchain: stable
         profile: minimal
@@ -28,48 +29,18 @@ jobs:
       run: |
         fuelup default testnet
 
-    - name: Find directories with forc.toml
-      id: find_dirs
+    - name: List directories
       run: |
-        dirs=$(find . -type f -name 'forc.toml' -exec dirname {} \; | sed 's|^\./||')
-        echo "dirs=$dirs" >> $GITHUB_ENV
+        echo "Directories to be built:"
+        for dir in $(find . -mindepth 1 -maxdepth 1 -type d); do
+          echo "$dir"
+        done
 
-    - name: Create build matrix
-      id: build_matrix
+    - name: Build all directories
       run: |
-        dirs=$(echo $dirs | tr ' ' '\n' | jq -R . | jq -s .)
-        echo "::set-output name=matrix::${dirs}"
-
-  build_each:
-    needs: build_and_test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dir: ${{ fromJson(needs.build_and_test.outputs.matrix) }}
-
-    steps:
-    - uses: actions/checkout@v3
-      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
-
-    - name: Set up Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        profile: minimal
-        override: true
-
-    - name: Install Fuelup
-      run: |
-        curl https://install.fuel.network | sh
-
-    - name: Modify Path
-      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
-
-    - name: Set Fuelup environment and add component
-      run: |
-        fuelup default testnet
-
-    - name: Build in ${{ matrix.dir }}
-      run: |
-        cd ${{ matrix.dir }}
-        forc build
+        for dir in $(find . -mindepth 1 -maxdepth 1 -type d); do
+          echo "Building in $dir"
+          cd $dir
+          forc build
+          cd ..
+        done
