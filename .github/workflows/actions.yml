@@ -10,7 +10,7 @@ jobs:
       matrix_dirs: ${{ steps.set_matrix.outputs.matrix_dirs }}
     steps:
     - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Validate number of directories
       id: set_matrix
@@ -58,9 +58,11 @@ jobs:
   setup:
     needs: validate
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.cache-key }}
     steps:
     - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -82,9 +84,13 @@ jobs:
 
     - name: Save cache
       id: cache-key
-      run: |
-        cache_key=$(date +%s)
-        echo "::set-output name=cache-key::$cache_key"
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo
+          ~/.rustup
+          ~/.fuelup
+        key: ${{ runner.os }}-cargo-fuelup-${{ hashFiles('**/Cargo.lock') }}
 
   build:
     needs: [validate, setup]
@@ -94,7 +100,7 @@ jobs:
         dir: ${{ fromJson(needs.validate.outputs.matrix_dirs) }}
     steps:
     - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Restore setup cache
       uses: actions/cache@v3
@@ -104,8 +110,11 @@ jobs:
           ~/.rustup
           ~/.fuelup
         key: ${{ needs.setup.outputs.cache-key }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-fuelup-
 
     - name: Build in ${{ matrix.dir }}
       run: |
+        echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
         cd ${{ matrix.dir }}
         forc build
