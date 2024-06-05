@@ -43,6 +43,7 @@ jobs:
           "functions",
           "cheatsheet",
           "storage_map"
+          "variables"
         ]' | jq length)
         
         if [ $matrix_length -ne $expected_length ]; then
@@ -64,7 +65,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
-      uses: actions-rs/toolchain@v1.1.0
+      uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
         profile: minimal
