@@ -4,61 +4,39 @@ on:
   pull_request:
 
 jobs:
-  validate:
+  build_and_test:
     runs-on: ubuntu-latest
-    outputs:
-      matrix_dirs: ${{ steps.set_matrix.outputs.matrix_dirs }}
-    steps:
-    - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    strategy:
+      matrix:
+        dir: [
+          'predicate-multisig',
+          'primitive_types',
+          'tuples',
+          'control_flow_if',
+          'constants',
+          'logging',
+          'base_asset',
+          'vector',
+          'enums',
+          'structs',
+          'control_flow_while_loop',
+          'compound_types',
+          'blockchain_types',
+          'control_flow_match_statement',
+          'solidity_cheatsheet',
+          'results',
+          'configurable_constants',
+          'uniswapv2',
+          'options',
+          'account_types',
+          'hello_sway',
+          'functions',
+          'cheatsheet',
+          'storage_map',
+          'variables'
+        ]
 
-    - name: Validate number of directories
-      id: set_matrix
-      run: |
-        dirs=$(ls -d */ | sed 's|/||')
-        matrix_length=$(echo "$dirs" | wc -l)
-        expected_length=$(echo '[
-          "predicate-multisig",
-          "primitive_types",
-          "tuples",
-          "control_flow_if",
-          "constants",
-          "logging",
-          "base_asset",
-          "vector",
-          "variables",
-          "enums",
-          "structs",
-          "control_flow_while_loop",
-          "compound_types",
-          "blockchain_types",
-          "control_flow_match_statement",
-          "solidity_cheatsheet",
-          "results",
-          "configurable_constants",
-          "uniswapv2",
-          "options",
-          "account_types",
-          "hello_sway",
-          "functions",
-          "cheatsheet",
-          "storage_map"
-        ]' | jq length)
-        
-        if [ $matrix_length -ne $expected_length ]; then
-          echo "Error: Number of directories ($matrix_length) does not match the expected count ($expected_length)"
-          exit 1
-        else
-          echo "Number of directories ($matrix_length) matches the expected count ($expected_length)"
-        fi
-        
-        echo "::set-output name=matrix_dirs::[$(echo $dirs | jq -R . | jq -s . | jq -c '.')]"
-
-  setup:
-    needs: validate
-    runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-key.outputs.cache-key }}
+    name: Build ${{ matrix.dir }}
     steps:
     - uses: actions/checkout@v3
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -79,32 +57,17 @@ jobs:
 
     - name: Set Fuelup environment and add component
       run: |
-        fuelup default latest
+        fuelup default testnet
 
-    - name: Cache setup
-      id: cache-key
+    - name: Check directory count
       run: |
-        cache_key=$(date +%s)
-        echo "::set-output name=cache-key::$cache_key"
-
-  build:
-    needs: [validate, setup]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dir: ${{ fromJson(needs.validate.outputs.matrix_dirs) }}
-    steps:
-    - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-
-    - name: Restore setup cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo
-          ~/.rustup
-          ~/.fuelup
-        key: ${{ needs.setup.outputs.cache-key }}
+        actual_count=$(find . -maxdepth 1 -type d | wc -l)
+        matrix_count=${{ format('{0}', strategy.matrix.dir) | fromJson | length }}
+        if [ "$actual_count" -ne "$matrix_count" ]; then
+          echo "Error: The number of directories in the matrix does not match the actual number of directories in the project."
+          echo "Actual count: $actual_count, Matrix count: $matrix_count"
+          exit 1
+        fi
 
     - name: Build in ${{ matrix.dir }}
       run: |
