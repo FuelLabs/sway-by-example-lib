@@ -1,5 +1,5 @@
 [[package]]
-name = "basic_asset"
+name = "account_types"
 source = "member"
 dependencies = ["std"]
 

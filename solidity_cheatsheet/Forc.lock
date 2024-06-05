@@ -1,11 +1,11 @@
 [[package]]
-name = "contract_calls"
-source = "member"
-dependencies = ["std"]
-
-[[package]]
 name = "core"
 source = "path+from-root-148AAAB4460F1A9D"
+
+[[package]]
+name = "solidity_cheatsheet"
+source = "member"
+dependencies = ["std"]
 
 [[package]]
 name = "std"
