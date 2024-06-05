@@ -24,7 +24,6 @@ jobs:
           "logging",
           "base_asset",
           "vector",
-          "variables",
           "enums",
           "structs",
           "control_flow_while_loop",
