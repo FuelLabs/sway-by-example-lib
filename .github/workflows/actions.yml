@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  build_and_test:
+  validate_and_build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,7 +35,7 @@ jobs:
           'storage_map'
         ]
 
-    name: Build ${{ matrix.dir }}
+    name: Validate and Build ${{ matrix.dir }}
     steps:
     - uses: actions/checkout@v3
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -57,6 +57,17 @@ jobs:
     - name: Set Fuelup environment and add component
       run: |
         fuelup default testnet
+
+    - name: Validate number of directories
+      run: |
+        matrix_length=$(echo "${{ toJson(strategy.matrix.dir) }}" | jq '. | length')
+        dir_count=$(ls -d */ | wc -l)
+        if [ $matrix_length -ne $dir_count ]; then
+          echo "Error: Number of directories ($matrix_length) does not match the count of directories ($dir_count)"
+          exit 1
+        else
+          echo "Number of directories ($matrix_length) matches the expected count ($dir_count)"
+        fi
 
     - name: Build in ${{ matrix.dir }}
       run: |
