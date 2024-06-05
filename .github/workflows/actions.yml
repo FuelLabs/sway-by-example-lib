@@ -46,7 +46,7 @@ jobs:
         matrix_length=$(echo "$expected_dirs" | jq length)
         dir_count=$(ls -d */ | grep -v .github | wc -l)
         
-        if [ $matrix_length -ne $dir_count ]; then
+        if [ $matrix_length -ne $dir_count]; then
           echo "Error: Number of directories ($matrix_length) does not match the count of directories ($dir_count)"
           exit 1
         else
