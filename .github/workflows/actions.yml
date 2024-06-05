@@ -10,12 +10,14 @@ jobs:
       matrix_dirs: ${{ steps.set_matrix.outputs.matrix_dirs }}
     steps:
     - uses: actions/checkout@v3
-      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Validate number of directories
       id: set_matrix
       run: |
-        expected_dirs='[
+        dirs=$(ls -d */ | sed 's|/||')
+        matrix_length=$(echo "$dirs" | wc -l)
+        expected_length=$(echo '[
           "predicate-multisig",
           "primitive_types",
           "tuples",
@@ -24,7 +26,6 @@ jobs:
           "logging",
           "base_asset",
           "vector",
-          "variables",
           "enums",
           "structs",
           "control_flow_while_loop",
@@ -41,29 +42,28 @@ jobs:
           "functions",
           "cheatsheet",
           "storage_map"
-        ]'
+        ]' | jq length)
         
-        matrix_length=$(echo "$expected_dirs" | jq length)
-        dir_count=$(ls -d */ | grep -v .github | wc -l)
-        
-        if [ $matrix_length -ne $dir_count ]; then
-          echo "Error: Number of directories ($matrix_length) does not match the count of directories ($dir_count)"
+        if [ $matrix_length -ne $expected_length ]; then
+          echo "Error: Number of directories ($matrix_length) does not match the expected count ($expected_length)"
           exit 1
         else
-          echo "Number of directories ($matrix_length) matches the expected count ($dir_count)"
+          echo "Number of directories ($matrix_length) matches the expected count ($expected_length)"
         fi
         
-        echo "::set-output name=matrix_dirs::$(echo $expected_dirs | jq -c .)"
+        echo "::set-output name=matrix_dirs::[$(echo $dirs | jq -R . | jq -s . | jq -c '.')]"
 
   setup:
     needs: validate
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.cache-key }}
     steps:
     - uses: actions/checkout@v3
-      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
-      uses: actions-rs/toolchain@v1
+      uses: actions-rs/toolchain@v1.1.0
       with:
         toolchain: stable
         profile: minimal
@@ -78,37 +78,32 @@ jobs:
 
     - name: Set Fuelup environment and add component
       run: |
-        fuelup default testnet
+        fuelup default latest
 
-    - name: Save cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo
-          ~/.rustup
-          ~/.fuelup
-        key: ${{ runner.os }}-cargo-fuelup-${{ hashFiles('**/Cargo.lock') }}
+    - name: Cache setup
+      id: cache-key
+      run: |
+        cache_key=$(date +%s)
+        echo "::set-output name=cache-key::$cache_key"
 
   build:
-    needs: setup
+    needs: [validate, setup]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dir: ${{ fromJson(needs.validate.outputs.matrix_dirs) }}
     steps:
     - uses: actions/checkout@v3
-      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
-    - name: Restore cache
+    - name: Restore setup cache
       uses: actions/cache@v3
       with:
         path: |
           ~/.cargo
           ~/.rustup
           ~/.fuelup
-        key: ${{ runner.os }}-cargo-fuelup-${{ hashFiles('**/Cargo.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-fuelup-
+        key: ${{ needs.setup.outputs.cache-key }}
 
     - name: Build in ${{ matrix.dir }}
       run: |
