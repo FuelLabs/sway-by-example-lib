@@ -1,0 +1,42 @@
+name: Testnet build for all examples
+
+on:
+  pull_request:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+
+    - name: Install Fuelup
+      run: |
+        curl https://install.fuel.network | sh
+
+    - name: Modify Path
+      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
+
+    - name: Set Fuelup environment and add component
+      run: |
+        fuelup default testnet
+
+    - name: Build and test all subdirectories
+      run: |
+        for dir in $(find . -type d -maxdepth 1 ! -path .); do
+          if [ -f "$dir/Cargo.toml" ]; then
+            echo "Building and testing in $dir"
+            cd $dir
+            forc build
+            cargo test
+            cd ..
+          fi
+        done
