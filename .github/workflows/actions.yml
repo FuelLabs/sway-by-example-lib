@@ -42,7 +42,7 @@ jobs:
           "hello_sway",
           "functions",
           "cheatsheet",
-          "storage_map"
+          "storage_map",
           "variables"
         ]' | jq length)
         
