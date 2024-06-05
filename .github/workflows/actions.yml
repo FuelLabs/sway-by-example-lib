@@ -42,8 +42,7 @@ jobs:
           "hello_sway",
           "functions",
           "cheatsheet",
-          "storage_map",
-          "variables"
+          "storage_map"
         ]' | jq length)
         
         if [ $matrix_length -ne $expected_length ]; then
