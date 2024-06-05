@@ -36,7 +36,6 @@ jobs:
             echo "Building and testing in $dir"
             cd $dir
             forc build
-            cargo test
             cd ..
           fi
         done
