@@ -24,6 +24,7 @@ jobs:
           "logging",
           "base_asset",
           "vector",
+          "variables",
           "enums",
           "structs",
           "control_flow_while_loop",
@@ -76,7 +77,7 @@ jobs:
         curl https://install.fuel.network | sh
 
     - name: Modify Path
-      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
+      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_ENV
 
     - name: Set Fuelup environment and add component
       run: |
@@ -115,6 +116,5 @@ jobs:
 
     - name: Build in ${{ matrix.dir }}
       run: |
-        echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
         cd ${{ matrix.dir }}
         forc build
