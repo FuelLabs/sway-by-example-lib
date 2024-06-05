@@ -9,32 +9,33 @@ jobs:
     strategy:
       matrix:
         dir: [
-          './predicate-multisig',
-          './primitive_types',
-          './tuples',
-          './control_flow_if',
-          './constants',
-          './logging',
-          './base_asset',
-          './vector',
-          './enums',
-          './structs',
-          './control_flow_while_loop',
-          './compound_types',
-          './blockchain_types',
-          './control_flow_match_statement',
-          './solidity_cheatsheet',
-          './results',
-          './configurable_constants',
-          './uniswapv2',
-          './options',
-          './account_types',
-          './hello_sway',
-          './functions',
-          './cheatsheet',
-          './storage_map'
+          'predicate-multisig',
+          'primitive_types',
+          'tuples',
+          'control_flow_if',
+          'constants',
+          'logging',
+          'base_asset',
+          'vector',
+          'enums',
+          'structs',
+          'control_flow_while_loop',
+          'compound_types',
+          'blockchain_types',
+          'control_flow_match_statement',
+          'solidity_cheatsheet',
+          'results',
+          'configurable_constants',
+          'uniswapv2',
+          'options',
+          'account_types',
+          'hello_sway',
+          'functions',
+          'cheatsheet',
+          'storage_map'
         ]
 
+    name: Build ${{ matrix.dir }}
     steps:
     - uses: actions/checkout@v3
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
