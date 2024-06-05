@@ -6,13 +6,41 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir: [
+          './predicate-multisig',
+          './primitive_types',
+          './tuples',
+          './control_flow_if',
+          './constants',
+          './logging',
+          './base_asset',
+          './vector',
+          './enums',
+          './structs',
+          './control_flow_while_loop',
+          './compound_types',
+          './blockchain_types',
+          './control_flow_match_statement',
+          './solidity_cheatsheet',
+          './results',
+          './configurable_constants',
+          './uniswapv2',
+          './options',
+          './account_types',
+          './hello_sway',
+          './functions',
+          './cheatsheet',
+          './storage_map'
+        ]
 
     steps:
     - uses: actions/checkout@v3
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
-      uses: actions-rs/toolchain@v1
+      uses: actions-rs/toolchain@v1.1.0
       with:
         toolchain: stable
         profile: minimal
@@ -29,18 +57,7 @@ jobs:
       run: |
         fuelup default testnet
 
-    - name: List directories
+    - name: Build in ${{ matrix.dir }}
       run: |
-        echo "Directories to be built:"
-        for dir in $(find . -mindepth 1 -maxdepth 1 -type d); do
-          echo "$dir"
-        done
-
-    - name: Build all directories
-      run: |
-        for dir in $(find . -mindepth 1 -maxdepth 1 -type d); do
-          echo "Building in $dir"
-          cd $dir
-          forc build
-          cd ..
-        done
+        cd ${{ matrix.dir }}
+        forc build
