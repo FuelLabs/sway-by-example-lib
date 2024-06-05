@@ -20,5 +20,6 @@ storage {
 impl HelloModular for Contract {
     #[storage(read)]
     fn my_lucky_number() -> u64 {
+        storage.lucky_number.read()
     }
 }
