@@ -15,9 +15,7 @@ jobs:
     - name: Validate number of directories
       id: set_matrix
       run: |
-        dirs=$(ls -d */ | sed 's|/||')
-        matrix_length=$(echo "$dirs" | wc -l)
-        expected_length=$(echo '[
+        expected_dirs='[
           "predicate-multisig",
           "primitive_types",
           "tuples",
@@ -26,7 +24,6 @@ jobs:
           "logging",
           "base_asset",
           "vector",
-          "variables",
           "enums",
           "structs",
           "control_flow_while_loop",
@@ -42,23 +39,25 @@ jobs:
           "hello_sway",
           "functions",
           "cheatsheet",
-          "storage_map"
-        ]' | jq length)
+          "storage_map",
+          "variables"
+        ]'
         
-        if [ $matrix_length -ne $expected_length ]; then
-          echo "Error: Number of directories ($matrix_length) does not match the expected count ($expected_length)"
+        matrix_length=$(echo "$expected_dirs" | jq length)
+        dir_count=$(ls -d */ | grep -v .github | wc -l)
+        
+        if [ $matrix_length -ne $dir_count ]; then
+          echo "Error: Number of directories ($matrix_length) does not match the count of directories ($dir_count)"
           exit 1
         else
-          echo "Number of directories ($matrix_length) matches the expected count ($expected_length)"
+          echo "Number of directories ($matrix_length) matches the expected count ($dir_count)"
         fi
         
-        echo "::set-output name=matrix_dirs::[$(echo $dirs | jq -R . | jq -s . | jq -c '.')]"
+        echo "::set-output name=matrix_dirs::$(echo $expected_dirs | jq -c .)"
 
   setup:
     needs: validate
     runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-key.outputs.cache-key }}
     steps:
     - uses: actions/checkout@v3
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -81,7 +80,7 @@ jobs:
       run: |
         fuelup default latest
 
-    - name: Cache setup
+    - name: Save cache
       id: cache-key
       run: |
         cache_key=$(date +%s)
