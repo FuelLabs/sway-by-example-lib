@@ -35,7 +35,9 @@ jobs:
           if [ -f "$dir/Cargo.toml" ]; then
             echo "Building and testing in $dir"
             cd $dir
-            forc build
+            if [ -f "forc.toml" ]; then
+              forc build
+            fi
             cd ..
           fi
         done
