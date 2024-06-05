@@ -64,7 +64,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
-      uses: actions-rs/toolchain@v1.1.0
+      uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
         profile: minimal
