@@ -1,11 +1,11 @@
 [[package]]
-name = "core"
-source = "path+from-root-148AAAB4460F1A9D"
-
-[[package]]
-name = "solidity_cheatsheet"
+name = "base_asset"
 source = "member"
 dependencies = ["std"]
+
+[[package]]
+name = "core"
+source = "path+from-root-148AAAB4460F1A9D"
 
 [[package]]
 name = "std"

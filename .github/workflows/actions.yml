@@ -1,0 +1,89 @@
+name: Rust Cargo Build for Multiple Directories
+
+on:
+  pull_request:
+
+jobs:
+  setup_fuelup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+
+    - name: Install Fuelup
+      run: |
+        curl https://install.fuel.network | sh
+
+    - name: Modify Path
+      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
+
+    - name: Cache Fuelup components
+      id: cache-fuelup
+      uses: actions/cache@v3
+      with:
+        path: ~/.fuelup
+        key: ${{ runner.os }}-fuelup-${{ hashFiles('**/forc.toml') }}
+
+    - name: Set Fuelup environment and add component
+      run: |
+        fuelup default testnet
+
+  build_and_test:
+    runs-on: ubuntu-latest
+    needs: setup_fuelup
+    strategy:
+      matrix:
+        dir: [
+          'predicate-multisig',
+          'primitive_types',
+          'tuples',
+          'control_flow_if',
+          'constants',
+          'logging',
+          'base_asset',
+          'vector',
+          'enums',
+          'structs',
+          'control_flow_while_loop',
+          'compound_types',
+          'blockchain_types',
+          'control_flow_match_statement',
+          'solidity_cheatsheet',
+          'results',
+          'configurable_constants',
+          'uniswapv2',
+          'options',
+          'account_types',
+          'hello_sway',
+          'functions',
+          'cheatsheet',
+          'storage_map',
+          'variables'
+        ]
+
+    name: Build and Test ${{ matrix.dir }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Restore Fuelup cache
+      id: restore-fuelup-cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.fuelup
+        key: ${{ runner.os }}-fuelup-${{ hashFiles('**/forc.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-fuelup-
+
+    - name: Modify Path
+      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
+
+    - name: Build in ${{ matrix.dir }}
+      run: |
+        cd ${{ matrix.dir }}
+        forc build

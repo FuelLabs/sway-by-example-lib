@@ -2,6 +2,6 @@
 authors = ["Kin Chan"]
 entry = "main.sw"
 license = "Apache-2.0"
-name = "account_types"
+name = "results"
 
 [dependencies]

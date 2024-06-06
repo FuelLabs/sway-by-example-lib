@@ -1,13 +1,13 @@
 [[package]]
-name = 'account_types'
-source = 'member'
-dependencies = ['std']
+name = "account_types"
+source = "member"
+dependencies = ["std"]
 
 [[package]]
-name = 'core'
-source = 'path+from-root-0119DF11C9A6FAEB'
+name = "core"
+source = "path+from-root-148AAAB4460F1A9D"
 
 [[package]]
-name = 'std'
-source = 'git+https://github.com/fuellabs/sway?tag=v0.33.0#2b2b4b117c4f6a5e762e368af0dfc6896fa31e7d'
-dependencies = ['core']
+name = "std"
+source = "git+https://github.com/fuellabs/sway?tag=v0.59.0#d9985d8111f94235edba9a08fc71a9513ec2a95c"
+dependencies = ["core"]
