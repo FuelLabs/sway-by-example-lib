@@ -1,4 +1,4 @@
-name: Forc Build All Examples
+name: Forc build all examples
 
 on:
   pull_request:
@@ -67,7 +67,7 @@ jobs:
           'variables'
         ]
 
-    name: Forc Build ${{ matrix.dir }}
+    name: Forc build [ ${{ matrix.dir }} ]
     steps:
     - uses: actions/checkout@v3
 
