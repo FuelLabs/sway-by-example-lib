@@ -1,3 +1,3 @@
 # Sway By Example
 
-Welcome to the book broski
+Welcome to the sway by example book!
