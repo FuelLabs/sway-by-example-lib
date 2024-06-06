@@ -41,7 +41,7 @@ jobs:
       matrix:
         dir: [
           'predicate-multisig',
-          # Add other directories here
+          'primitive_types',
         ]
 
     name: Build and Test ${{ matrix.dir }}
