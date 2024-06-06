@@ -1,4 +1,4 @@
-name: Rust Cargo Build for Multiple Directories
+name: Forc build all examples
 
 on:
   pull_request:
@@ -67,7 +67,7 @@ jobs:
           'variables'
         ]
 
-    name: Build and Test ${{ matrix.dir }}
+    name: Forc build [ ${{ matrix.dir }} ]
     steps:
     - uses: actions/checkout@v3
 
@@ -85,5 +85,5 @@ jobs:
 
     - name: Build in ${{ matrix.dir }}
       run: |
-        cd ${{ matrix.dir }}
+        cd examples/${{ matrix.dir }}
         forc build
