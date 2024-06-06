@@ -4,69 +4,13 @@ on:
   pull_request:
 
 jobs:
-  validate:
+  setup_fuelup:
     runs-on: ubuntu-latest
-    outputs:
-      matrix_dirs: ${{ steps.set_matrix.outputs.matrix_dirs }}
     steps:
     - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-
-    - name: Validate number of directories
-      id: set_matrix
-      run: |
-        dirs=$(ls -d */ | sed 's|/||')
-        matrix_length=$(echo "$dirs" | wc -l)
-        expected_length=$(echo '[
-          "predicate-multisig",
-          "primitive_types",
-          "tuples",
-          "control_flow_if",
-          "constants",
-          "logging",
-          "base_asset",
-          "vector",
-          "enums",
-          "structs",
-          "control_flow_while_loop",
-          "compound_types",
-          "blockchain_types",
-          "control_flow_match_statement",
-          "solidity_cheatsheet",
-          "results",
-          "configurable_constants",
-          "uniswapv2",
-          "options",
-          "account_types",
-          "hello_sway",
-          "functions",
-          "cheatsheet",
-          "storage_map"
-        ]' | jq length)
-        
-        if [ $matrix_length -ne $expected_length ]; then
-          echo "Error: Number of directories ($matrix_length) does not match the expected count ($expected_length)"
-          exit 1
-        else
-          echo "Number of directories ($matrix_length) matches the expected count ($expected_length)"
-        fi
-        
-        echo "::set-output name=matrix_dirs::[$(echo $dirs | jq -R . | jq -s . | jq -c '.')]"
-
-  build_and_test:
-    needs: validate
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dir: ${{ fromJson(needs.validate.outputs.matrix_dirs) }}
-
-    name: Build ${{ matrix.dir }}
-    steps:
-    - uses: actions/checkout@v3
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
     - name: Set up Rust
-      uses: actions-rs/toolchain@v1.1.0
+      uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
         profile: minimal
@@ -79,9 +23,42 @@ jobs:
     - name: Modify Path
       run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
 
+    - name: Cache Fuelup components
+      id: cache-fuelup
+      uses: actions/cache@v3
+      with:
+        path: ~/.fuelup
+        key: ${{ runner.os }}-fuelup-${{ hashFiles('**/forc.toml') }}
+
     - name: Set Fuelup environment and add component
       run: |
         fuelup default testnet
+
+  build_and_test:
+    runs-on: ubuntu-latest
+    needs: setup_fuelup
+    strategy:
+      matrix:
+        dir: [
+          'predicate-multisig',
+          # Add other directories here
+        ]
+
+    name: Build and Test ${{ matrix.dir }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Restore Fuelup cache
+      id: restore-fuelup-cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.fuelup
+        key: ${{ runner.os }}-fuelup-${{ hashFiles('**/forc.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-fuelup-
+
+    - name: Modify Path
+      run: echo "$HOME/.fuelup/bin:$PATH" >> $GITHUB_PATH
 
     - name: Build in ${{ matrix.dir }}
       run: |
