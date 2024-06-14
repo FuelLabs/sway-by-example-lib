@@ -2,4 +2,4 @@
 
 Examples of blockchain data types in Sway
 
-{{#include ../../examples/blockchain_types/src/main.sw}}
+{{#include ../examples/blockchain_types/src/main.sw}}

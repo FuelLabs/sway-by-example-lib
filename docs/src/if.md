@@ -2,4 +2,4 @@
 
 Examples of if statements in Sway
 
-{{#include ../../examples/control_flow_if/src/main.sw}}
+{{#include ../examples/control_flow_if/src/main.sw}}

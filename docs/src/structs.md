@@ -2,4 +2,4 @@
 
 Examples of structs in Sway
 
-{{#include ../../examples/structs/src/main.sw}}
+{{#include ../examples/structs/src/main.sw}}

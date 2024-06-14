@@ -2,4 +2,4 @@
 
 Examples of tuples in Sway
 
-{{#include ../../examples/tuples/src/main.sw}}
+{{#include ../examples/tuples/src/main.sw}}

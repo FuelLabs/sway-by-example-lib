@@ -2,4 +2,4 @@
 
 Examples of base asset in Sway
 
-{{#include ../../examples/base_asset/src/main.sw}}
+{{#include ../examples/base_asset/src/main.sw}}

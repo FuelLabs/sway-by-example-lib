@@ -2,4 +2,4 @@
 
 Examples of constants in Sway
 
-{{#include ../../examples/constants/src/main.sw}}
+{{#include ../examples/constants/src/main.sw}}

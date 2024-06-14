@@ -8,4 +8,4 @@ A quick `Solidity` → `Sway` cross reference for the most commonly used items
 
 If something is missing here you can most likely find it in the Sway STD Library
 
-{{#include ../../examples/solidity_cheatsheet/src/main.sw}}
+{{#include ../examples/solidity_cheatsheet/src/main.sw}}

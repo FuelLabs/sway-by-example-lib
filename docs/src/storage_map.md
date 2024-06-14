@@ -2,4 +2,4 @@
 
 Examples of storage map in Sway
 
-{{#include ../../examples/storage_map/src/main.sw}}
+{{#include ../examples/storage_map/src/main.sw}}

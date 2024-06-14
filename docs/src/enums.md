@@ -2,4 +2,4 @@
 
 Examples of enums in Sway
 
-{{#include ../../examples/enums/src/main.sw}}
+{{#include ../examples/enums/src/main.sw}}
