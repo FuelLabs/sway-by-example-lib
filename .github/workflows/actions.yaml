@@ -1,6 +1,9 @@
 name: Forc build all examples
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
 
 jobs:
