@@ -2,4 +2,4 @@
 
 Examples of functions in Sway
 
-{{#include ../../examples/functions/src/main.sw}}
+{{#include ../examples/functions/src/main.sw}}
