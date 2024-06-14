@@ -40,7 +40,7 @@ jobs:
     strategy:
       matrix:
         dir: [
-          'predicate-multisig',
+          'predicate_multisig',
           'primitive_types',
           'tuples',
           'control_flow_if',
