@@ -1,3 +1,4 @@
 # Sway By Example
 
-Welcome to the sway by example book!
+An introduction to Sway with simple examples
+
