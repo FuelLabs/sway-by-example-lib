@@ -37,9 +37,7 @@ Examples of imports in Sway
         └── math_lib.sw
 
 ```
-Any external imports needs to be defined as a dependacy within `Forc.toml`
+
+All external imports must be defined as dependencies within `Forc.toml`
 
 {{#include ../examples/imports/Forc.toml}}
-
-
-
