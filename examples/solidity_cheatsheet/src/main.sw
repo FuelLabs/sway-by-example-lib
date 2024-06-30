@@ -33,7 +33,7 @@ impl SolidityCheatsheet for Contract {
             Within the library Sway team has also provided full list of operations 
             i.e. exponents, plus, minus, multiply, divide, square roots, etc
             Full of operations here https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/u128.sw
-            Note there is also an equivalent for uint256 composed of four 64-bit components
+            uint128 will be supported as a primitive in the near future. 
         */
         return U128::from((0, 12)) + U128::from((0, 12)); // uint128 equivalent
     }

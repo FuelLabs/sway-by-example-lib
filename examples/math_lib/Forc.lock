@@ -3,7 +3,7 @@ name = "core"
 source = "path+from-root-E19CE48B3E858B72"
 
 [[package]]
-name = "primitive_types"
+name = "math_lib"
 source = "member"
 dependencies = ["std"]
 
