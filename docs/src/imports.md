@@ -8,17 +8,22 @@ Examples of imports in Sway
 
 ## Project Structures
 
-### Internal 
+### Internal
+
 ```bash
+
 └── imports
     ├── Forc.toml
     └── src
         ├── imports_library.sw
         └── main.sw
+
 ```
 
-### External 
+### External
+
 ```bash
+
 ├── imports
 │   ├── Forc.toml
 │   └── src
@@ -30,6 +35,7 @@ Examples of imports in Sway
         ├── Q64x64.sw
         ├── full_math.sw
         └── math_lib.sw
+
 ```
 Any external imports needs to be defined as a dependacy within `Forc.toml`
 
