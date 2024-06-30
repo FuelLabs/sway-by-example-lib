@@ -9,6 +9,7 @@
 - [Compound Types](./compound-types.md)
 - [Blockchain Types](./blockchain-types.md)
 - [Functions](./functions.md)
+- [Imports](./imports.md)
 - [Structs](./structs.md)
 - [Tuples](./tuples.md)
 - [Enums](./enums.md)

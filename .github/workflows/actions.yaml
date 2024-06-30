@@ -67,7 +67,9 @@ jobs:
           'functions',
           'cheatsheet',
           'storage_map',
-          'variables'
+          'variables',
+          'math_lib'
+          'imports',
         ]
 
     name: Forc build [ ${{ matrix.dir }} ]
