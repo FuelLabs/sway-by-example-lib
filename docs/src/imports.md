@@ -40,4 +40,6 @@ Examples of imports in Sway
 
 All external imports must be defined as dependencies within `Forc.toml`
 
+```toml
 {{#include ../examples/imports/Forc.toml}}
+```
