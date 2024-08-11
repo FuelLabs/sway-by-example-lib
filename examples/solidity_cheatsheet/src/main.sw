@@ -4,15 +4,17 @@ use std::{
     identity::Identity,
     block::{ height, timestamp },
     auth::msg_sender,
+    hash::*,
     constants::*,
-    u128::U128
 };
 
 abi SolidityCheatsheet {
     fn get_blocknumber() -> u32;
     fn get_blocktime() -> u64;
     fn get_msg_sender() -> Identity;
-    fn get_u128_number() -> U128;
+    fn get_bytes32() -> b256;
+    fn get_hash() -> b256;
+    fn get_u256_number() -> u256;
 }
 
 impl SolidityCheatsheet for Contract {
@@ -27,14 +29,16 @@ impl SolidityCheatsheet for Contract {
     fn get_msg_sender() -> Identity {
         return msg_sender().unwrap(); // msg.sender equivalent
     }
+    
+    fn get_bytes32() -> b256 {
+        return 45.as_u256().as_b256(); // u64 to u256 to b256
+    }
+    
+    fn get_hash() -> b256 {
+        return sha256("Sway is the way"); // hashing of fixed size string
+    }
 
-    fn get_u128_number() -> U128 { 
-        /*  There is no uint128 in Sway so it is composed of two 64-bit components
-            Within the library Sway team has also provided full list of operations 
-            i.e. exponents, plus, minus, multiply, divide, square roots, etc
-            Full of operations here https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/u128.sw
-            uint128 will be supported as a primitive in the near future. 
-        */
-        return U128::from((0, 12)) + U128::from((0, 12)); // uint128 equivalent
+    fn get_u256_number() -> u256 {
+        return u256::from(12) + u256::zero(); // big number equivalent
     }
 }
