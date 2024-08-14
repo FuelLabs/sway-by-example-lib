@@ -70,7 +70,7 @@ jobs:
           'cheatsheet',
           'storage_map',
           'variables',
-          'math_lib'
+          'math_lib',
           'imports',
           'predicate',
         ]
