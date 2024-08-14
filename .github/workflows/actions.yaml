@@ -1,6 +1,8 @@
 name: Forc build all examples
 
 on:
+  # Allow to run manually
+  workflow_dispatch:
   push:
     branches:
       - main
