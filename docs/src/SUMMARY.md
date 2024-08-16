@@ -24,3 +24,4 @@
 - [Storage Map](./storage-map.md)
 - [Vector](./vector.md)
 - [Base Asset](./base-asset.md)
+- [Predicate](./predicate.md)

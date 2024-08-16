@@ -39,6 +39,6 @@ impl SolidityCheatsheet for Contract {
     }
 
     fn get_u256_number() -> u256 {
-        return u256::from(12) + u256::zero(); // big number equivalent
+        return u256::from((u64::min(), u64::min(), u64::min(), u64::min())); // big number equivalent
     }
 }

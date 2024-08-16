@@ -1,6 +1,8 @@
 name: Forc build all examples
 
 on:
+  # Allow to run manually
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -68,8 +70,9 @@ jobs:
           'cheatsheet',
           'storage_map',
           'variables',
-          'math_lib'
+          'math_lib',
           'imports',
+          'predicate',
         ]
 
     name: Forc build [ ${{ matrix.dir }} ]
