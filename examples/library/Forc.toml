@@ -5,4 +5,3 @@ license = "Apache-2.0"
 name = "library"
 
 [dependencies]
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
