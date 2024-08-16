@@ -68,6 +68,7 @@ jobs:
           'hello_sway',
           'functions',
           'cheatsheet',
+          'src20',
           'storage_map',
           'variables',
           'math_lib',
