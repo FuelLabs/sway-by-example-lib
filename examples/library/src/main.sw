@@ -1,14 +1,31 @@
 contract;
 
 // 1. Importing within the same project
-// Using "mod" keyword, you can define the library as a dependency within a program.
+// Using "mod" keyword, you can import an internal library that has been defined in this project.
 mod sqrt_lib;
 
 // It is a good practice to import in ABI
 // It is also a good practice to define events and custom errors using this way
 
-// Using "use" keyword imports in a library
-// use srt_lib::*;
+// Using "use" keyword imports in a library. This method is used to import an external lilbray that is defined outside the main `src` directory.
+// use sqrt_lib::math_sqrt;
+// $ tree
+// .
+// ├── my_project
+// │   ├── Cargo.toml
+// │   ├── Forc.toml
+// │   └─── src
+// │       └── main.sw
+// │
+// └── external_lib
+//     ├── Cargo.toml
+//     ├── Forc.toml
+//     └─── src
+//         └── lib.sw
+// External library is outside the src directory of our project. Thus, it needs to be added as a dependency in the Forc.toml of our project.
+// [dependencies]
+// external_lib = { path = "../external_lib" }
+
 
 // 2. Importing the standard library
 // The standard library consists of
@@ -23,6 +40,7 @@ mod sqrt_lib;
 //     constants::*,
 //     auth::msg_sender,
 // };
+
 
 // 3. Importing from a different project
 // If any library is not listed as a dependency, but present in forc.toml, you can use it as below.
