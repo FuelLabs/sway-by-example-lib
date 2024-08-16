@@ -1,8 +1,8 @@
-# Predicate
+# Script
 
-Examples of a predicate program type in Sway
+Examples of a script program type in Sway
 
-|                                | Predicates | Contracts |
+|                                | Predicates | Scripts  |
 |--------------------------------|------------|-----------|
 | Access data on chain           |      ❌     |     ✅     |
 | Read data from smart contracts |      ❌     |     ✅     |
@@ -14,5 +14,5 @@ Examples of a predicate program type in Sway
 | Read transaction bytecode      |      ✅     |     ✅     |
 
 ```sway
-{{#include ../examples/predicate/src/main.sw}}
+{{#include ../examples/script/src/main.sw}}
 ```
