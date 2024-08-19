@@ -25,3 +25,5 @@
 - [Vector](./vector.md)
 - [Base Asset](./base-asset.md)
 - [Library](./library.md)
+- [Predicate](./predicate.md)
+- [SRC20](./src20.md)

@@ -3,7 +3,7 @@ name = "core"
 source = "path+from-root-2AB5BCE55EAAEFF4"
 
 [[package]]
-name = "solidity_cheatsheet"
+name = "predicate"
 source = "member"
 dependencies = ["std"]
 

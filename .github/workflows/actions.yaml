@@ -1,6 +1,8 @@
 name: Forc build all examples
 
 on:
+  # Allow to run manually
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -66,11 +68,13 @@ jobs:
           'hello_sway',
           'functions',
           'cheatsheet',
+          'src20',
           'storage_map',
           'variables',
-          'math_lib'
+          'math_lib',
           'imports',
-          'library'
+          'library',
+          'predicate',
         ]
 
     name: Forc build [ ${{ matrix.dir }} ]
