@@ -70,6 +70,7 @@ jobs:
           'variables',
           'math_lib'
           'imports',
+          'library'
         ]
 
     name: Forc build [ ${{ matrix.dir }} ]
