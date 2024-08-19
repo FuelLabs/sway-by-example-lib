@@ -1,4 +1,4 @@
-# Hashing with Keccak256
+# Verifying Signatures in Sway
 
 Example of how to verify signatures in Sway 
 
