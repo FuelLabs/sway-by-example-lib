@@ -73,6 +73,7 @@ jobs:
           'variables',
           'math_lib',
           'imports',
+          'library',
           'predicate',
           'script',
           'big_number',
