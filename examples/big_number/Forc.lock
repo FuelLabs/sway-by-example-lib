@@ -1,0 +1,13 @@
+[[package]]
+name = "big_numbers"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "core"
+source = "path+from-root-2B2B43633BA4762F"
+
+[[package]]
+name = "std"
+source = "git+https://github.com/fuellabs/sway?rev#d003a5f5a82930b1585e0fdecf36cc131bfa26d0"
+dependencies = ["core"]

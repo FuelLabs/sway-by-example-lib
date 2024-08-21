@@ -1,2 +1,4 @@
 # sway-by-example-lib
-Library for compiled sway programs
+
+Library of compiled Sway programs to showcase accessible code for the Sway language.
+
