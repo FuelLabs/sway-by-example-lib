@@ -10,7 +10,6 @@ abi VerifySignature {
     fn get_message_hash(_to: b256, _amount: u64, _message: str, _nonce: u64) -> b256;
     fn get_eth_signed_message_hash(_message_hash: b256) -> b256;
     fn recover_signer(_eth_signed_message_hash: b256, _signature: B512) -> b256;
-    // NEEDS TO BE FIXED
     fn verify(_signer: b256, _to: b256, _amount: u64, _message: str, _nonce: u64, _signature: B512) -> bool;
     
 }

@@ -25,3 +25,5 @@
 - [Vector](./vector.md)
 - [Base Asset](./base-asset.md)
 - [Predicate](./predicate.md)
+- [Hashing](./hashing.md)
+- [Verify-Signature](./verify-signature.md)

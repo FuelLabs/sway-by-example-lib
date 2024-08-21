@@ -73,6 +73,8 @@ jobs:
           'math_lib',
           'imports',
           'predicate',
+          'hashing',
+          'verify_signature'
         ]
 
     name: Forc build [ ${{ matrix.dir }} ]
