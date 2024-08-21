@@ -25,5 +25,8 @@
 - [Vector](./vector.md)
 - [Base Asset](./base-asset.md)
 - [Predicate](./predicate.md)
+- [Script](./script.md)
+- [Big Numbers](./big-numbers.md)
+- [SRC20](./src20.md)
 - [Hashing](./hashing.md)
 - [Verify-Signature](./verify-signature.md)
