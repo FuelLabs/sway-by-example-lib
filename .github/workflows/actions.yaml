@@ -77,6 +77,8 @@ jobs:
           'predicate',
           'script',
           'big_number',
+          'hashing',
+          'verify_signature',
         ]
 
     name: Forc build [ ${{ matrix.dir }} ]
