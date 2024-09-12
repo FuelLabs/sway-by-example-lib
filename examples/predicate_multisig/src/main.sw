@@ -31,7 +31,7 @@ fn verify_signature(i: u64) -> u64 {
     let mut j = 0;
 
     while j < 3 {
-        let current_signature = tx_witness_data::<B512>(j);
+        let current_signature = tx_witness_data::<B512>(j).unwrap();
         
         let current_address = ec_recover_address(current_signature, tx_hash).unwrap();
 
