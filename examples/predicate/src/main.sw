@@ -5,6 +5,9 @@ use std::{
     inputs::{
         input_amount,
     },
+    outputs::{
+        output_amount,
+    },
     tx::{
         tx_id,
         tx_witnesses_count
@@ -17,8 +20,8 @@ configurable {
     FLOOR: u64 = 1,
 }
 
-fn input_checks() -> bool {
-    if (100 >= input_amount(0).unwrap()) {
+fn input_output_checks() -> bool {
+    if (100 >= input_amount(0).unwrap() && 100 >= output_amount(0).unwrap()) {
         return true
     }
     return false
@@ -43,5 +46,5 @@ fn main(a: u64, b: str, c: bool, d: b256) -> bool {
         x -= 1; 
     }
 
-    return input_checks()
+    return input_output_checks()
 }
