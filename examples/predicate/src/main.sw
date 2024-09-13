@@ -21,7 +21,7 @@ configurable {
 }
 
 fn input_output_checks() -> bool {
-    if (100 >= input_amount(0).unwrap() && 100 >= output_amount(0)) {
+    if (100 >= input_amount(0).unwrap() && 100 >= output_amount(0).unwrap()) {
         return true
     }
     return false
