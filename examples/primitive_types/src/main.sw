@@ -21,6 +21,9 @@ impl MyContract for Contract {
         let u_32: u32 = 123;
         // 0 <= u64 <= 2**64 - 1
         let u_64: u64 = 123;
+        // 0 <= u256 <= 2**256 - 1 
+        // Since u256 are bigger than registers they are stored in memory rather than registers
+        let u256: u256 = 123;
 
         let u_64_max = u64::max();
 

@@ -1,4 +1,3 @@
 # Sway By Example
 
-An introduction to Sway with simple examples
-
+Library of compiled Sway programs to showcase accessible code for the Sway language.
