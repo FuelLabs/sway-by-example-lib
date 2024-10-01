@@ -1,6 +1,6 @@
 [[package]]
 name = "core"
-source = "path+from-root-E19CE48B3E858B72"
+source = "path+from-root-4BA3A18A2D620E67"
 
 [[package]]
 name = "primitive_types"
@@ -9,5 +9,5 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.60.0#2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6"
+source = "git+https://github.com/fuellabs/sway?tag=v0.64.0#2156bfbbee01ffb85bfca2aae8f185f8e7c715a4"
 dependencies = ["core"]

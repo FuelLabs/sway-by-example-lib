@@ -1,6 +1,6 @@
 [[package]]
 name = "core"
-source = "path+from-root-2AB5BCE55EAAEFF4"
+source = "path+from-root-4BA3A18A2D620E67"
 
 [[package]]
 name = "solidity_cheatsheet"
@@ -9,5 +9,5 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.62.0#efda0397c7bee77de73bd726ec0b732d57614973"
+source = "git+https://github.com/fuellabs/sway?tag=v0.64.0#2156bfbbee01ffb85bfca2aae8f185f8e7c715a4"
 dependencies = ["core"]
