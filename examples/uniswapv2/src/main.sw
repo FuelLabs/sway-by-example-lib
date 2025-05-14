@@ -84,7 +84,7 @@ impl SRC20 for Contract {
     }
 }
 
-#[storage(read, write), payable]
+#[storage(read, write)]
 fn deposit_or_call(asset: AssetId) -> u64 {
     match msg_amount() > 0 {
         true => {

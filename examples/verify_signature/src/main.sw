@@ -5,6 +5,7 @@ use std::ecr::{ec_recover_address, EcRecoverError};
 use std::bytes::Bytes;
 use std::b512::B512;
 use std::constants::ZERO_B256;
+use std::codec::encode;
 
 abi VerifySignature {
     fn GetMessageHash(to: b256, amount: u64, message: str, nonce: u64) -> b256;
@@ -17,10 +18,10 @@ abi VerifySignature {
 fn GetMessageHash(to: b256, amount: u64, message: str, nonce: u64) -> b256 {
         keccak256({
         let mut bytes = Bytes::new();
-        bytes.append(Bytes::from(core::codec::encode(to)));
-        bytes.append(Bytes::from(core::codec::encode(amount)));
-        bytes.append(Bytes::from(core::codec::encode(message)));
-        bytes.append(Bytes::from(core::codec::encode(nonce)));
+        bytes.append(Bytes::from(encode(to)));
+        bytes.append(Bytes::from(encode(amount)));
+        bytes.append(Bytes::from(encode(message)));
+        bytes.append(Bytes::from(encode(nonce)));
         bytes
     })
     }
@@ -28,8 +29,8 @@ fn GetMessageHash(to: b256, amount: u64, message: str, nonce: u64) -> b256 {
     fn GetEthSignedMessageHash(message_hash: b256) -> b256 {
         keccak256({
         let mut bytes = Bytes::new();
-        bytes.append(Bytes::from(core::codec::encode("\x19Fuel Signed Message:\n32")));
-        bytes.append(Bytes::from(core::codec::encode(message_hash)));
+        bytes.append(Bytes::from(encode("\x19Fuel Signed Message:\n32")));
+        bytes.append(Bytes::from(encode(message_hash)));
         bytes
     })
     }

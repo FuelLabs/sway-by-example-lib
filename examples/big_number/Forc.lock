@@ -4,10 +4,5 @@ source = "member"
 dependencies = ["std"]
 
 [[package]]
-name = "core"
-source = "path+from-root-2B2B43633BA4762F"
-
-[[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?rev#d003a5f5a82930b1585e0fdecf36cc131bfa26d0"
-dependencies = ["core"]
+source = "git+https://github.com/fuellabs/sway?tag=v0.68.2#05480bb07ed7b62e4123a2696ba22bce57ffb049"
